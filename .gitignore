@@ -1,0 +1,45 @@
+# Node
+node_modules/
+npm-debug.*
+
+# Expo
+# > Should I commit the ".expo" folder?
+# No, you should not share the ".expo" folder.
+# It does not contain any information that is relevant 
+# for other developers working on the project, 
+# it is specific to your machine.
+.expo/
+
+# Android Studio / Intellij
+*.iml
+.gradle
+.idea
+
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.xccheckout
+*.xcscmblueprint
+xcuserdata
+
+# Jest & Test
+.jest
+coverage/*
+
+# VSCode
+.history/
+.vscode/
+
+# Other recommended (auto generated while expo init)
+dist/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# App specific
+whitelabel
+
