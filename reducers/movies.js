@@ -30,7 +30,7 @@ function movieReducer(state = initialState, action) {
         return obj.id != action.payload;
       });
       console.log('deletedNewArray', deletedNewArray)
-      return { ...state, movie: state.movie };
+      return { ...state, movie: deletedNewArray };
 
     default:
       return state;

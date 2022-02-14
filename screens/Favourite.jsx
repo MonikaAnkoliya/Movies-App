@@ -16,6 +16,11 @@ const Favourite = ({ navigation }) => {
   const movies = useSelector((state) => state.rootReducer.movie);
   const dispatch = useDispatch();
   const deleteNote = (id) => dispatch(deleteMovie(id));
+  const [moviefav, setMovieFav] = useState(moviefav)
+
+  useEffect(()=>{
+    setMovieFav(movies)
+  },[movies])
 
   const renderItem = ({ item }) => (
     <Item
@@ -29,7 +34,7 @@ const Favourite = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {movies.length > 0 ? (
         <FlatList
-          data={movies}
+          data={moviefav}
           renderItem={renderItem}
           keyExtractor={(item, index) => (item.id + index).toString()}
         />

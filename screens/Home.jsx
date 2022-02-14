@@ -14,15 +14,18 @@ import {
   addMovie,
   getAllMovies,
   searchByTitle,
+  deleteMovie,
 } from "../actions/movies";
 
 const Home = ({ navigation }) => {
   const movies = useSelector((state) => state.rootReducer.movie);
   const dispatch = useDispatch();
   const addNote = (note) => dispatch(addMovie(note));
-  const [latestMovie, setLatestMovie] = useState([]);
+  const deleteNote = (id) => dispatch(deleteMovie(id));
+  const [latestMovie, setLatestMovie] = useState(movies);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [films, setFilms] = useState([]);
+  const [buttenText, setButtonText] = useState("Add Favourite");
 
   useEffect(() => {
     getData();
@@ -35,31 +38,58 @@ const Home = ({ navigation }) => {
     const latestfilm = [];
     Promise.all(bbb).then((responses) => {
       responses.map((response) => {
+        console.log(
+          "movies.find((o) => o.id === response.id",
+          !movies.find((o) => o.id === response.id)
+        );
         if (!movies.find((o) => o.id === response.id)) {
+          response.favorite = "Add Favourite";
+          latestfilm.push(response);
+        } else {
+          response.favorite = "Remove Favourite";
           latestfilm.push(response);
         }
       });
-      setLatestMovie(latestfilm);
-      setFilms(latestfilm);
+      console.log("searchQuery", searchQuery);
+      if (searchQuery) {
+        setLatestMovie(latestfilm);
+        searchMovie(searchQuery, latestfilm);
+      } else {
+        setLatestMovie(latestfilm);
+        setFilms(latestfilm);
+      }
     });
   };
-  const searchMovie = (str) => {
+
+  const searchMovie = (str, latestfilm) => {
     if (str.length > 0) {
+      console.log('sttt', str)
       setSearchQuery(str);
-      searchByTitle(latestMovie, str).then((res) => {
-        setLatestMovie(res);
-      });
+      searchByTitle(latestfilm.length > 0 ? latestMovie : latestfilm, str).then(
+        (res) => {
+          setLatestMovie(res);
+        }
+      );
     } else {
       setLatestMovie(films);
+    }
+  };
+
+  const onClick = (item) => {
+    console.log("item", item);
+    if (!movies.find((o) => o.id === item.id)) {
+      addNote(item);
+    } else {
+      deleteNote(item.id);
     }
   };
 
   const renderItem = ({ item }) => (
     <Item
       item={item}
-      onClick={() => navigation.navigate("Detail")}
-      onButtenClick={() => addNote(item)}
-      buttonText={"Add Favourite"}
+      onClick={() => navigation.navigate("Detail", { item })}
+      onButtenClick={() => onClick(item)}
+      buttonText={item.favorite}
     />
   );
 

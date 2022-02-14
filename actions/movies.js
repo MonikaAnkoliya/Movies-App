@@ -33,7 +33,6 @@ export async function getAllMovies() {
       return response.json();
     })
     .then(async (res) => {
-console.log('res', res)
       t = await res?.map(async (item) => {
         return await fetch(
           `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${
@@ -53,6 +52,8 @@ console.log('res', res)
             return response.json();
           })
           .then(async (res) => {
+
+          
             return res;
           })
           .catch((err) => {
