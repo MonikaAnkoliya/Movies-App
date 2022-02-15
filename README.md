@@ -1,5 +1,5 @@
 # Movies App
-Getting Started with [Expo](https://docs.expo.dev/)[React-Native](https://facebook.github.io/react-native/), [Redux](https://redux.js.org/), [Redux-Persist](https://github.com/rt2zz/redux-persist) and [React-Navigation](https://reactnavigation.org/)
+Getting Started with [Expo](https://docs.expo.dev/), [React-Native](https://facebook.github.io/react-native/), [Redux](https://redux.js.org/), [Redux-Persist](https://github.com/rt2zz/redux-persist), [React-Navigation](https://reactnavigation.org/) and [IMDB - Movie Database](https://rapidapi.com/apidojo/api/imdb8/)
 
 ## Getting Started
 
