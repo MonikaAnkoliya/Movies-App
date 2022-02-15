@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
   StyleSheet,
   SafeAreaView,
   FlatList,
   StatusBar,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Card, Title, Paragraph } from "react-native-paper";
 import { deleteMovie } from "../actions/movies";
 import Item from "./components/Item";
 
@@ -16,18 +13,22 @@ const Favourite = ({ navigation }) => {
   const movies = useSelector((state) => state.rootReducer.movie);
   const dispatch = useDispatch();
   const deleteNote = (id) => dispatch(deleteMovie(id));
-  const [moviefav, setMovieFav] = useState(moviefav)
+  const [moviefav, setMovieFav] = useState(moviefav);
 
-  useEffect(()=>{
-    setMovieFav(movies)
-  },[movies])
+  useEffect(() => {
+    const temp = movies.map((item) => {
+      item.favorite = "Delete Favourite";
+      return item;
+    });
+    setMovieFav(temp);
+  }, [movies]);
 
   const renderItem = ({ item }) => (
     <Item
       item={item}
-      onClick={() => navigation.navigate("Detail")}
+      onClick={() => navigation.navigate("Detail", { item })}
       onButtenClick={() => deleteNote(item.id)}
-      buttonText={"Delete Favourite"}
+      buttonText={item.favorite}
     />
   );
   return (

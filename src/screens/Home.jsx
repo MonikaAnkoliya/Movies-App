@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
   StyleSheet,
   SafeAreaView,
   FlatList,
@@ -24,7 +22,7 @@ const Home = ({ navigation }) => {
   const deleteNote = (id) => dispatch(deleteMovie(id));
   const [latestMovie, setLatestMovie] = useState(movies);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [films, setFilms] = useState([]);
+  const [films, setFilms] = useState(movies);
   const [buttenText, setButtonText] = useState("Add Favourite");
 
   useEffect(() => {
@@ -33,15 +31,11 @@ const Home = ({ navigation }) => {
 
   const getData = async () => {
     let t = [];
-    const bbb = await getAllMovies();
+    const MoviesData = await getAllMovies();
 
     const latestfilm = [];
-    Promise.all(bbb).then((responses) => {
+    Promise.all(MoviesData).then((responses) => {
       responses.map((response) => {
-        console.log(
-          "movies.find((o) => o.id === response.id",
-          !movies.find((o) => o.id === response.id)
-        );
         if (!movies.find((o) => o.id === response.id)) {
           response.favorite = "Add Favourite";
           latestfilm.push(response);
@@ -54,6 +48,7 @@ const Home = ({ navigation }) => {
       if (searchQuery) {
         setLatestMovie(latestfilm);
         searchMovie(searchQuery, latestfilm);
+        // setFilms(latestfilm);
       } else {
         setLatestMovie(latestfilm);
         setFilms(latestfilm);
@@ -63,14 +58,14 @@ const Home = ({ navigation }) => {
 
   const searchMovie = (str, latestfilm) => {
     if (str.length > 0) {
-      console.log('sttt', str)
       setSearchQuery(str);
-      searchByTitle(latestfilm.length > 0 ? latestMovie : latestfilm, str).then(
+      searchByTitle(latestfilm, str).then(
         (res) => {
           setLatestMovie(res);
         }
       );
     } else {
+      setSearchQuery("");
       setLatestMovie(films);
     }
   };
@@ -97,7 +92,7 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Searchbar
         placeholder="Search"
-        onChangeText={searchMovie}
+        onChangeText={(str)=>searchMovie(str, films)}
         value={searchQuery}
       />
       <FlatList

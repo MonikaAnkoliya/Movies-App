@@ -1,10 +1,10 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import TabNavigator from "./navigation/TabNavigator";
+import TabNavigator from "./src/navigation/TabNavigator";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { Provider } from "react-redux";
-import { store, persistor } from "./store";
+import { store, persistor } from "./src/store";
 
 const App = () => {
   return (

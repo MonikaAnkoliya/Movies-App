@@ -1,16 +1,15 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { useRoute } from '@react-navigation/native'
 import Item from "./components/Item";
 
 const Detail = () => {
   const route = useRoute();
-  console.log('route.params.item', route.params.item)
   return (
-    <View style={styles.center}>
+    <ScrollView style={styles.center}>
       <Text style={styles.title}>Detail screen</Text>
-      <Item item={route.params.item} detail={true}/>
-    </View>
+      <Item item={route.params.item} detail={true} buttonText={route.params.item.favorite}/>
+    </ScrollView>
   );
 };
 
